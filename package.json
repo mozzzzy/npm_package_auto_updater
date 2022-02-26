@@ -1,7 +1,9 @@
 {
   "name": "npm_package_auto_updater",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "npm package auto updater",
+  "author": "mozzzzy",
+  "main": "src/main.js",
   "bin": {
     "npm-package-auto-updater": "bin/npm-package-auto-updater"
   },

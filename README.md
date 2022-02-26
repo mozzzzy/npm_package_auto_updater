@@ -5,9 +5,7 @@ NPM package auto updater.
 
 ## Install
 ```bash
-$ git clone git@github.com:mozzzzy/npm_package_auto_updater.git
-$ cd npm_package_auto_updater
-$ npm link
+$ npm install -g npm_package_auto_updater
 ```
 
 ## Uninstall
@@ -17,6 +15,15 @@ $ npm uninstall -g npm_package_auto_updater
 
 ## Usage
 ```bash
-$ cd <target repository>
-$ npm-package-auto-updater [-set-caret|-set-tilde] [-dryrun] [-debug]
+$ npm-package-auto-updater -h   
+npm_package_auto_updater [option]
+
+option
+  -debug     : Enable debug logging.
+  -dryrun    : Do only check. Don't modify package.json, package-lock.json and node_modules.
+  -h, -help  : Show help message.
+  -set-caret : Add '^' when update package versions.
+  -set-tilde : Add '~' when update package versions.
+               Note that this option has priority over '-set-caret'.
+
 ```

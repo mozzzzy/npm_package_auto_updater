@@ -1,4 +1,10 @@
 /*
+ * Builtin Packages
+ */
+
+const fs = require('fs');
+
+/*
  * External Packages
  */
 
@@ -261,21 +267,30 @@ const main = async function (packageJsonPath) {
   const args = new Arguments(process.argv);
   const logLevel = args.getBoolean('-debug') ? Logger.static.DEBUG : Logger.static.INFO;
   const dryrun = args.getBoolean('-dryrun') ? true : false;
+  const needHelp = args.getBoolean('-help') || args.getBoolean('-h') ? true : false;
   const setCaret = args.getBoolean('-set-caret') ? true : false;
   const setTilde = args.getBoolean('-set-tilde') ? true : false;
 
+  if (needHelp) {
+    console.log(`npm_package_auto_updater [option]`);
+    console.log(``);
+    console.log(`option`);
+    console.log(`  -debug     : Enable debug logging.`);
+    console.log(`  -dryrun    : Do only check. Don't modify package.json, package-lock.json and node_modules.`);
+    console.log(`  -h, -help  : Show help message.`);
+    console.log(`  -set-caret : Add '^' when update package versions.`);
+    console.log(`  -set-tilde : Add '~' when update package versions.`);
+    console.log(`               Note that this option has priority over '-set-caret'.`);
+    console.log(``);
+    return;
+  }
+
   logger = new Logger(logLevel);
 
-  if (!dryrun) {
-    // npm install before npm list.
-    try {
-      logger.info(`Execute npm install because I need to execute 'npm list' later.`);
-      await NpmCommandWrapper.install();
-      logger.info(`  -> Executed npm install successfully.`);
-    } catch (err) {
-      logger.error(`  -> Failed to execute npm install: ${err}`);
-      return;
-    }
+  if (fs.existsSync('./node_modules') === false) {
+    // npm install should be executed before npm list.
+    logger.error(`'node_modules' directory is not found. Please run 'npm i' first.`);
+    return;
   }
 
   // Get all dependencies (like dependencies, depDependencies, peerDependencies, and so on) from npm list.
