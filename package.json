@@ -8,7 +8,7 @@
     "npm-package-auto-updater": "bin/npm-package-auto-updater"
   },
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint . --config eslintrc.js",
     "start": "node ./bin/npm-package-auto-updater",
     "test": "jest"
   },

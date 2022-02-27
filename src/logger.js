@@ -1,4 +1,3 @@
-
 /*
  * Variables
  */
@@ -17,73 +16,80 @@ const RESET = '\u001b[0m';
 
 class Logger {
   // private
-  #logLevel
-  #addColor
+  #logLevel;
+
+  #addColor;
 
   #log(msg, logLevel) {
-    if (msg === undefined) {
-      msg = '';
-    }
+    const complementedMsg = msg === undefined ? '' : msg;
     if (typeof logLevel !== 'object' || logLevel === null) {
-      throw new Error(`Invalid argument. type of logLevel should be an object.`);
+      throw new Error('Invalid argument. type of logLevel should be an object.');
     }
     if (typeof logLevel.color !== 'string') {
-      throw new Error(`Invalid argument. type of logLevel.color should be a string.`);
+      throw new Error('Invalid argument. type of logLevel.color should be a string.');
     }
     if (typeof logLevel.index !== 'number') {
-      throw new Error(`Invalid argument. type of logLevel.index should be a number.`);
+      throw new Error('Invalid argument. type of logLevel.index should be a number.');
     }
     if (typeof logLevel.prefix !== 'string') {
-      throw new Error(`Invalid argument. type of logLevel.prefix should be a string.`);
+      throw new Error('Invalid argument. type of logLevel.prefix should be a string.');
     }
 
     if (this.#logLevel.index >= logLevel.index) {
       const coloredPrefix = this.#addColor ? `${logLevel.color}${logLevel.prefix}${RESET}` : logLevel.prefix;
-      if (typeof msg === 'string') {
-        console.log(`${coloredPrefix} ${msg}`);
+      if (typeof complementedMsg === 'string') {
+        // eslint-disable-next-line no-console
+        console.log(`${coloredPrefix} ${complementedMsg}`);
         return;
       }
       process.stdout.write(`${coloredPrefix} `);
-      console.log(msg);
+      // eslint-disable-next-line no-console
+      console.log(complementedMsg);
     }
   }
 
   // public
   constructor(logLevel, addColor) {
     if (typeof logLevel !== 'object' || logLevel === null) {
-      throw new Error(`Invalid argument. type of logLevel should be an object.`);
+      throw new Error('Invalid argument. type of logLevel should be an object.');
     }
     if (typeof logLevel.color !== 'string') {
-      throw new Error(`Invalid argument. type of logLevel.color should be a string.`);
+      throw new Error('Invalid argument. type of logLevel.color should be a string.');
     }
     if (typeof logLevel.index !== 'number') {
-      throw new Error(`Invalid argument. type of logLevel.index should be a number.`);
+      throw new Error('Invalid argument. type of logLevel.index should be a number.');
     }
     if (typeof logLevel.prefix !== 'string') {
-      throw new Error(`Invalid argument. type of logLevel.prefix should be a string.`);
+      throw new Error('Invalid argument. type of logLevel.prefix should be a string.');
     }
     this.#logLevel = logLevel;
     this.#addColor = addColor !== undefined ? addColor : true;
   }
+
   debug(msg) {
     this.#log(msg, Logger.static.DEBUG);
   }
+
   info(msg) {
     this.#log(msg, Logger.static.INFO);
   }
+
   notice(msg) {
     this.#log(msg, Logger.static.NOTICE);
   }
+
   warn(msg) {
     this.#log(msg, Logger.static.WARN);
   }
+
   error(msg) {
     this.#log(msg, Logger.static.ERROR);
   }
+
   crit(msg) {
     this.#log(msg, Logger.static.CRIT);
   }
-};
+}
 
 Logger.static = {
   DEBUG: {

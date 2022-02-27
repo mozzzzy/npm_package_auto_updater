@@ -4,8 +4,10 @@ class PackageJsonAccessor {
   //
   // Private
   //
-  #packageJson
-  #packageJsonPath
+  #packageJson;
+
+  #packageJsonPath;
+
   //
   // Public
   //
@@ -16,14 +18,18 @@ class PackageJsonAccessor {
 
   getVersion(packageName) {
     if (this.#packageJson.devDependencies !== undefined) {
-      for (const [name, version] of Object.entries(this.#packageJson.devDependencies)) {
+      for (const [name, version] of Object.entries(
+        this.#packageJson.devDependencies,
+      )) {
         if (name === packageName) {
           return version;
         }
       }
     }
     if (this.#packageJson.dependencies !== undefined) {
-      for (const [name, version] of Object.entries(this.#packageJson.dependencies)) {
+      for (const [name, version] of Object.entries(
+        this.#packageJson.dependencies,
+      )) {
         if (name === packageName) {
           return version;
         }
@@ -55,18 +61,11 @@ class PackageJsonAccessor {
     if (!packageIsFound) {
       throw new Error(`Package ${packageName} was not found in package.json.`);
     }
-    writeFileSync(this.#packageJsonPath, JSON.stringify(this.#packageJson, undefined, 2));
+    writeFileSync(
+      this.#packageJsonPath,
+      JSON.stringify(this.#packageJson, undefined, 2),
+    );
   }
-
-  updatePackage(packageName, latestVersion) {
-    const currentVersion = this.getVersion(packageName);
-    if (currentVersion === undefined) {
-      throw new Error(`Package ${packageName} was not found in package.json.`);
-    }
-    const newVersion = `^${latestVersion}`;
-    console.log(`Update ${packageName} from ${currentVersion} to ${newVersion} in package.json.`);
-    this.setVersion(packageName, newVersion);
-  }
-};
+}
 
 module.exports = PackageJsonAccessor;
