@@ -429,18 +429,8 @@ const main = async function (packageJsonPath) {
       packageJsonAccessor.setVersion(pkgName, pkgInfo.updateVersion);
     }
     logger.info(`  -> Updated package.json successfully.`);
-
-    // npm install to check installation and update package-lock.json.
-    try {
-      logger.info(`Execute npm install.`);
-      await NpmCommandWrapper.install();
-      logger.info(`  -> Executed npm install successfully.`);
-    } catch (err) {
-      logger.error(`  -> Failed to execute npm install: ${err}`);
-      return;
-    }
   } else {
-    logger.notice(`dryrun mode is set. Skip changing package.json and package-lock.json.`);
+    logger.notice(`dryrun mode is set. Skip changing package.json.`);
   }
 }
 
