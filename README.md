@@ -1,4 +1,6 @@
 # npm_package_auto_updater
+![master](https://github.com/mozzzzy/npm_package_auto_updater/actions/workflows/node.js.yml/badge.svg?branch=master)
+![master](https://github.com/mozzzzy/npm_package_auto_updater/actions/workflows/daily_build.yml/badge.svg?branch=master)
 
 ## What
 NPM package auto updater.
