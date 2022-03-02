@@ -352,7 +352,7 @@ const main = async (packageJsonPath) => {
     console.log('  -debug     : Enable debug logging.');
     // eslint-disable-next-line no-console
     console.log(
-      "  -dryrun    : Do only check. Don't modify package.json, package-lock.json and node_modules.",
+      "  -dryrun    : Do only check. Don't modify package.json.",
     );
     // eslint-disable-next-line no-console
     console.log('  -h, -help  : Show help message.');
